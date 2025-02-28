@@ -36,10 +36,6 @@ Thumbs.db
 # Coverage folder (from testing)
 coverage/
 
-# Test or coverage output folders
-test/
-*.test.js
-*.spec.js
 
 # Yarn lock file (if you're using npm instead)
 yarn.lock
