@@ -1,7 +1,15 @@
 const express = require('express');
 const Task = require('../models/Task');
-const { connectRabbitMQ, publishMessage  } = require('../config/rabbitmq');
+const { publishMessage } = require('../config/rabbitmq');
 const router = express.Router();
+
+/**
+ * Helper function for handling errors
+ */
+const handleError = (res, error, statusCode = 500) => {
+    console.error(error);  // Log the full error stack for debugging purposes
+    res.status(statusCode).json({ error: error.message || 'Internal server error' });
+};
 
 /**
  * @route   POST /tasks
@@ -13,12 +21,12 @@ router.post('/', async (req, res) => {
         
         await publishMessage({
             action: 'create',
-            taskData 
+            taskData
         });
 
         res.status(201).json({ message: 'Task creation request sent to queue' });
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        handleError(res, error);
     }
 });
 
@@ -31,7 +39,7 @@ router.get('/', async (req, res) => {
         const tasks = await Task.find();
         res.json(tasks);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        handleError(res, error);
     }
 });
 
@@ -45,7 +53,7 @@ router.get('/:id', async (req, res) => {
         if (!task) return res.status(404).json({ message: 'Task not found' });
         res.json(task);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        handleError(res, error, 400); // Bad Request if ID format is invalid
     }
 });
 
@@ -55,38 +63,37 @@ router.get('/:id', async (req, res) => {
  */
 router.put('/:id', async (req, res) => {
     try {
-        const { id } = req.params;  // Extract task ID from the URL
-        const taskData = req.body;  // Extract task data (updated fields) from the request body
+        const { id } = req.params;
+        const taskData = req.body;
 
-        // Send an update request to the RabbitMQ queue
         await publishMessage({
             action: 'update',
-            taskId: id,   // Send the task ID to the worker
-            taskData      // Send the updated task data
+            taskId: id,
+            taskData
         });
 
         res.status(200).json({ message: 'Task update request sent to queue' });
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        handleError(res, error);
     }
 });
+
 /**
  * @route   DELETE /tasks/:id
  * @desc    Delete a task by ID
  */
 router.delete('/:id', async (req, res) => {
     try {
-        const { id } = req.params;  // Extract task ID from the URL
+        const { id } = req.params;
 
-        // Send a delete request to the RabbitMQ queue
         await publishMessage({
             action: 'delete',
-            taskId: id   // Send the task ID to the worker to delete it
+            taskId: id
         });
 
         res.status(200).json({ message: 'Task delete request sent to queue' });
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        handleError(res, error);
     }
 });
 
