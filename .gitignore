@@ -1,0 +1,48 @@
+# Node modules
+node_modules/
+
+# npm logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Environment files
+.env
+
+# Docker-related files
+docker-compose.override.yml
+.docker/
+
+# Build output
+/dist
+/build
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Temporary files
+*.swp
+*.swo
+*.bak
+
+# IDE configurations
+.vscode/
+.idea/
+
+# Coverage folder (from testing)
+coverage/
+
+# Test or coverage output folders
+test/
+*.test.js
+*.spec.js
+
+# Yarn lock file (if you're using npm instead)
+yarn.lock
+
+# Optional: if you're using Docker, you may also want to add:
+.dockeri
