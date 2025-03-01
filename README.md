@@ -3,7 +3,7 @@
 A simple Task Management System with a focus on backend development. 
 
 ## Introduction
-This project is a backend API for managing tasks. It is built using Node.js and Express, with MongoDB as the database. The API provides endpoints for creating, updating, and deleting tasks. Asynchronous processing is implemented using RabbitMQ. Jest is used for unit testing.
+This project is a backend API for managing tasks. It is built using Node.js and Express, with MongoDB as the database. The API provides endpoints for creating, reading, updating, and deleting tasks. Asynchronous processing is implemented using RabbitMQ. Jest is used for unit testing. The API is containerized using Docker and Docker Compose. The frontend is built using React.
 
 ## Installation
 ### Prerequisites
@@ -71,7 +71,7 @@ The API provides the following endpoints:
         ```json
         [
             {
-                "_id": "61f7b1b3b3b3b3b3b3b3b3b3",
+                "_id": "67c20e79db52f1e3a4ef0636",
                 "title": "Task 1",
                 "description": "Description of Task 1",
                 "completed": false,
@@ -80,7 +80,7 @@ The API provides the following endpoints:
                 "__v": 0
             },
             {
-                "_id": "61f7b1b3b3b3b3b3b3b3b3b",
+                "_id": "67c340abdb52f1e3a4ef063a",
                 "title": "Task 2",
                 "description": "Description of Task 2",
                 "completed": true,
@@ -97,7 +97,7 @@ The API provides the following endpoints:
     - **Response Body**:
         ```json
         {
-            "_id": "61f7b1b3b3b3b3b3b3b3b3",
+            "_id": "67c20e79db52f1e3a4ef0636",
             "title": "Task 1",
             "description": "Description of Task 1",
             "completed": false,
@@ -139,3 +139,17 @@ To run the tests, use the following command:
 ```sh
     npx jest
 ```
+
+## Frontend
+
+A simple frontend application is available at `http://localhost:3000`. The frontend is built using React and provides a basic interface for interacting with the API.
+
+To start the frontend, run the following command:
+```sh
+    cd task-manager-frontend
+    npm start
+```
+
+
+![ui image](images/UIExample.JPG)
+

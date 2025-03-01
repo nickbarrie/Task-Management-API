@@ -1,0 +1,112 @@
+/* Global Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Main Container */
+#root {
+  width: 100%;
+  max-width: 80%;
+  text-align: center;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+h1, h2 {
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Task List */
+ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.task-buttons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto; /* Pushes buttons to the right */
+}
+
+li button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease-in-out;
+}
+
+
+
+
+/* Buttons */
+button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease-in-out;
+}
+
+
+li button:first-of-type {
+   justify-content: end;
+}
+
+li button:last-of-type {
+  justify-content: end;
+}
+
+li button:first-of-type:hover {
+  background: red;
+}
+
+li button:nth-of-type(2):hover {
+  background: rgb(255, 187, 0);
+}
