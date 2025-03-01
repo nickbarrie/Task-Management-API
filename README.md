@@ -63,10 +63,79 @@ The API provides the following endpoints:
             "message": "Task creation request sent to queue"
         }
         ```
-  
 
+- Get all tasks
+    - **URL**: `/tasks`
+    - **Method**: `GET`
+    - **Response Body**:
+        ```json
+        [
+            {
+                "_id": "61f7b1b3b3b3b3b3b3b3b3b3",
+                "title": "Task 1",
+                "description": "Description of Task 1",
+                "completed": false,
+                "createdAt": "2022-01-31T14:00:00.000Z",
+                "updatedAt": "2022-01-31T14:00:00.000Z",
+                "__v": 0
+            },
+            {
+                "_id": "61f7b1b3b3b3b3b3b3b3b3b",
+                "title": "Task 2",
+                "description": "Description of Task 2",
+                "completed": true,
+                "createdAt": "2022-01-31T14:00:00.000Z",
+                "updatedAt": "2022-01-31T14:00:00.000Z",
+                "__v": 0
+            }
+        ]
+        ```
 
-- `GET /tasks` - Get all tasks
-- `GET /tasks/:id` - Get a task by ID
-- `PUT /tasks/:id` - Update a task by ID
-- `DELETE /tasks/:id` - Delete a task by ID
+- Get a task by ID
+    - **URL**: `/tasks/:id`
+    - **Method**: `GET`
+    - **Response Body**:
+        ```json
+        {
+            "_id": "61f7b1b3b3b3b3b3b3b3b3",
+            "title": "Task 1",
+            "description": "Description of Task 1",
+            "completed": false,
+            "createdAt": "2022-01-31T14:00:00.000Z",
+            "updatedAt": "2022-01-31T14:00:00.000Z",
+            "__v": 0
+        }
+        ```
+
+- Update a task by ID
+    - **URL**: `/tasks/:id`
+    - **Method**: `PUT`
+    - **Request Body**:
+        ```json
+        {
+            "title": "Task 1",
+            "description": "Description of Task 1",
+            "completed": "true"
+        }
+        ```
+    - **Response Body**:
+        ```json
+        {
+            "message": "Task update request sent to queue"
+        }
+        ```
+- Delete a task by ID
+    - **URL**: `/tasks/:id`
+    - **Method**: `DELETE`
+    - **Response Body**:
+        ```json
+        {
+            "message": "Task deletion request sent to queue"
+        }
+        ```
+## Testing
+
+To run the tests, use the following command:
+```sh
+    npx jest
+```
