@@ -5,6 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
 const taskRoutes = require('./routes/taskRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -23,6 +24,8 @@ app.get("/", (req, res) => {
 });
 
 app.use('/tasks', taskRoutes);
+app.use('/api', authRoutes); 
+
 
 // Global Error Handler
 app.use((err, req, res, next) => {

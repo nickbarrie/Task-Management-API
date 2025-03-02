@@ -1,5 +1,6 @@
 const express = require('express');
 const Task = require('../models/Task');
+const authMiddleware = require('../middleware/authMiddleware'); 
 const { publishMessage } = require('../config/rabbitmq');
 const router = express.Router();
 
@@ -15,13 +16,31 @@ const handleError = (res, error, statusCode = 500) => {
  * @route   POST /tasks
  * @desc    Create a new task
  */
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => { 
     try {
-        const taskData = req.body;
-        
+        const { title, description } = req.body;
+
+        if (!title) {
+            return res.status(400).json({ error: "Title is required" });
+        }
+
+        const task = new Task({ 
+            title, 
+            description, 
+            completed: false, 
+            userId: req.userId 
+        });
+
+        // Fixed: Use `task` instead of undefined `taskData`
         await publishMessage({
             action: 'create',
-            taskData
+            taskData: {
+                id: task._id,
+                title: task.title,
+                description: task.description,
+                completed: task.completed,
+                userId: task.userId
+            }
         });
 
         res.status(201).json({ message: 'Task creation request sent to queue' });
@@ -30,18 +49,26 @@ router.post('/', async (req, res) => {
     }
 });
 
+
 /**
  * @route   GET /tasks
  * @desc    Read all tasks
  */
-router.get('/', async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
     try {
-        const tasks = await Task.find();
+        console.log("Authenticated User ID:", req.userId); // Debugging
+        const tasks = await Task.find({ userId: req.userId });
+
+        if (!tasks.length) {
+            return res.status(404).json({ message: "No tasks found for this user" });
+        }
+
         res.json(tasks);
     } catch (error) {
-        handleError(res, error);
+        res.status(500).json({ error: 'Error fetching tasks' });
     }
 });
+
 
 /**
  * @route   GET /tasks/:id

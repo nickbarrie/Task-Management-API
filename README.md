@@ -17,7 +17,7 @@ This project is a backend API for managing tasks. It is built using Node.js and 
 ### Steps
 1. Clone the repository:
    ```sh
-   git clone https://github.com/nickbarrie/Task-Managment-API.git
+   git clone https://github.com/nickbarrie/Task-Management-API.git
     ```
 2. Install dependencies:
     ```sh
@@ -27,12 +27,13 @@ This project is a backend API for managing tasks. It is built using Node.js and 
     ```sh
     cd Task-Managment-API
     ```
-4. Create a `.env` file in the root of the project and add the following environment variables:
+4. Create a `.env` file in the root of the project and add the following environment variables (replace values as needed):
     ```
     PORT=5000
     MONGO_URI=mongodb://mongo:27017/task-manager-api
     RABBITMQ_URI=amqp://rabbitmq:5672
     NODE_ENV=run
+    SECRET_KEY=mySuperSecretKey123
     ```
 5. Start the application:
     ``` 
@@ -42,7 +43,9 @@ This project is a backend API for managing tasks. It is built using Node.js and 
 
 ## Usage
 
-The API will be available at `http://localhost:5000`
+The API will be available at `http://localhost:5000`  
+The frontend is available at `http://localhost:3000`
+
 
 The API provides the following endpoints:
 
@@ -54,9 +57,17 @@ The API provides the following endpoints:
         {
         "title": "Task 1",
         "description": "Description of Task 1",
-        "completed": "false"
+        "completed": false
         }
         ```
+    - **Authorization**:
+        ```json
+            {
+            "Authorization": "Bearer YOUR_JWT_TOKEN"
+            }   
+
+         ```
+
     - **Response Body**:
         ```json
         {
@@ -67,6 +78,14 @@ The API provides the following endpoints:
 - Get all tasks
     - **URL**: `/tasks`
     - **Method**: `GET`
+
+    - **Authorization**:
+        ```json
+            {
+            "Authorization": "Bearer YOUR_JWT_TOKEN"
+            }
+
+         ```
     - **Response Body**:
         ```json
         [
@@ -94,6 +113,13 @@ The API provides the following endpoints:
 - Get a task by ID
     - **URL**: `/tasks/:id`
     - **Method**: `GET`
+    - **Authorization**:
+        ```json
+            {
+            "Authorization": "Bearer YOUR_JWT_TOKEN"
+            }
+
+         ```
     - **Response Body**:
         ```json
         {
@@ -115,9 +141,16 @@ The API provides the following endpoints:
         {
             "title": "Task 1",
             "description": "Description of Task 1",
-            "completed": "true"
+            "completed": true
         }
         ```
+    - **Authorization**:
+        ```json
+            {
+            "Authorization": "Bearer YOUR_JWT_TOKEN"
+            }
+
+         ```
     - **Response Body**:
         ```json
         {
@@ -127,6 +160,13 @@ The API provides the following endpoints:
 - Delete a task by ID
     - **URL**: `/tasks/:id`
     - **Method**: `DELETE`
+    - **Authorization**:
+        ```json
+            {
+         "Authorization": "Bearer YOUR_JWT_TOKEN"
+            }
+
+         ```
     - **Response Body**:
         ```json
         {
@@ -150,6 +190,49 @@ To start the frontend, run the following command:
     npm start
 ```
 
+
+## Authentication
+
+The API uses JWT for authentication. To access the API, you need to include a valid JWT token in the `Authorization` header of the request. The token is generated using the `SECRET_KEY` environment variable specified in the `.env` file.
+
+Authentication endpoints:
+
+- Register a new user
+    - **URL**: `/users`
+    - **Method**: `POST`
+    - **Request Body**:
+        ```json
+            {
+            "email": "tim@gmail.com",
+            "password": "123"
+            }
+        ```
+    - **Response Body**:
+        ```json
+           {
+            "message":"User registered successfully"
+            }
+        ```
+
+- Login
+    - **URL**: `/users/login`
+    - **Method**: `POST`
+    - **Request Body**:
+        ```json
+             {
+            "email": "tim@gmail.com",
+            "password": "123"
+            }
+        ```
+    - **Response Body**:
+        ```json
+            {
+            "token": "YOUR_JWT_TOKEN"
+            }
+
+        ```
+
+## UI Example
 
 ![ui image](images/UIExample.JPG)
 

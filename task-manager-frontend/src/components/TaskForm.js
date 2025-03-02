@@ -10,10 +10,21 @@ const TaskForm = ({ onTaskAdded }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createTask(task);
-    onTaskAdded(); 
-    setTask({ title: "", description: "" });
+
+    try {
+      // Call the API to create the task
+      const newTask = await createTask(task);
+
+      // Once the task is created, call the onTaskAdded function passed from the parent
+      onTaskAdded(newTask);
+
+      // Reset the form after submitting
+      setTask({ title: "", description: "" });
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
   };
+
 
   return (
     <form onSubmit={handleSubmit}>
